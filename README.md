@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Infograb 프론트엔드 채용 테스트
 
-## Getting Started
+## 🎯 서비스 설명
 
-First, run the development server:
+설문 조사 서비스를 만듭니다.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+조사가 끝나면 사용자의 정보와 조사한 누적 데이터로 다양한 통찰을 얻을 수 있는 차트를 보여줍니다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+설문 질문에 관한 주제는 자유롭게 선택할 수 있습니다.(예, MBTI, 심리테스트, 퀴즈 등)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⭐️ 기능 설명
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- 스텝별로 다른 문제로 구성된 페이지를 만듭니다.
+    - ‘다음’ 버튼을 누르면 다음 스텝으로 이동
+    - ‘이전’ 버튼을 누르면 다음 스텝으로 이동
+- 각 문제에 답을 입력하는 방법은 다양하게 구성해야 합니다.
+    - 5지선다 문제
+        - 반드시 답을 1~5점으로 환산할 수 있는 5지선다 문제를 만들어 주세요.
+    - 1~10 점수 입력 주관식 문제
+    - 다중 선택 5지선다 문제(다중선택시 문제의 답은 선택한 값의 합으로 하고, 보기는 1~5까지 표시한다.)
+    - 다양한 타입의 문제를 추가할 수 있습니다.
+- 시작 시, 팀과 이름을 입력받습니다.
+- Application storage에 사용자와 점수를 저장합니다.
+- 저장된 점수는 대시보드에 다양한 그래프로 나타낸다.
+    - 유의미한 데이터를 가독성있게 표현하면 좋습니다.
+    - 차트의 종류는 모던하고 멋지게 만들어주세요.
+    - 팀별 총합, 평균, 표준편차를 차트가 있어야 합니다.
 
-## Learn More
+## 사용 기술 스택
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`NextJS`, `react-chartjs-2`, `TypeScript`
