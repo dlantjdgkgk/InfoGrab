@@ -1,95 +1,65 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
 
-export default function Home() {
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Question, SurveyData } from './types/index';
+import SurveyForm from './components/SurveyForm';
+
+const questions: Question[] = [
+  {
+    id: 1,
+    type: 'rating',
+    question: '당신은 새로운 환경에 적응하는 것이 얼마나 쉽나요?',
+  },
+  {
+    id: 2,
+    type: 'score',
+    question: '1부터 10까지, 당신의 현재 스트레스 수준은 어느 정도인가요?',
+  },
+  {
+    id: 3,
+    type: 'multipleChoice',
+    question: '다음 중 당신이 가장 즐기는 활동은 무엇인가요? (복수 선택 가능)',
+    choices: ['독서', '운동', '요리', '여행', '음악 감상'],
+  },
+  {
+    id: 4,
+    type: 'rating',
+    question: '당신은 팀 프로젝트에서 리더 역할을 맡는 것을 얼마나 선호하나요?',
+  },
+  {
+    id: 5,
+    type: 'score',
+    question: '1부터 10까지, 당신의 현재 직무 만족도는 어느 정도인가요?',
+  },
+];
+
+export default function Survey() {
+  const [submitted, setSubmitted] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = (surveyData: SurveyData) => {
+    const existingData = JSON.parse(localStorage.getItem('surveyData') || '[]');
+    existingData.push(surveyData);
+    localStorage.setItem('surveyData', JSON.stringify(existingData));
+
+    setSubmitted(true);
+    setTimeout(() => {
+      router.push('/dashboard');
+    }, 2000);
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="survey-container">
+      <h1 className="survey-title">팀 분위기 및 직무 만족도 설문</h1>
+      {!submitted ? (
+        <SurveyForm questions={questions} onSubmit={handleSubmit} />
+      ) : (
+        <div className="survey-completion">
+          <p>설문에 참여해 주셔서 감사합니다!</p>
+          <p>곧 결과 대시보드로 이동합니다</p>
         </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      )}
+    </div>
   );
 }
